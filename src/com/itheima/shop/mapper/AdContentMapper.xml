@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.shop.mapper.AdContentMapper" >
+  <resultMap id="BaseResultMap" type="com.itheima.shop.pojo.AdContent" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="categoryId1" property="categoryid1" jdbcType="BIGINT" />
+    <result column="categoryId2" property="categoryid2" jdbcType="BIGINT" />
+    <result column="categoryId3" property="categoryid3" jdbcType="BIGINT" />
+    <result column="categoryName3" property="categoryname3" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="img_size" property="imgSize" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, title, categoryId1, categoryId2, categoryId3, categoryName3, sort, img, 
+    img_size, url, create_time, update_time, status, description
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itheima.shop.pojo.AdContentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ad_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ad_content
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ad_content
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itheima.shop.pojo.AdContentExample" >
+    delete from ad_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itheima.shop.pojo.AdContent" >
+    insert into ad_content (id, name, title, 
+      categoryId1, categoryId2, categoryId3, 
+      categoryName3, sort, img, 
+      img_size, url, create_time, 
+      update_time, status, description
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{categoryid1,jdbcType=BIGINT}, #{categoryid2,jdbcType=BIGINT}, #{categoryid3,jdbcType=BIGINT}, 
+      #{categoryname3,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, 
+      #{imgSize,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itheima.shop.pojo.AdContent" >
+    insert into ad_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="categoryid1 != null" >
+        categoryId1,
+      </if>
+      <if test="categoryid2 != null" >
+        categoryId2,
+      </if>
+      <if test="categoryid3 != null" >
+        categoryId3,
+      </if>
+      <if test="categoryname3 != null" >
+        categoryName3,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="imgSize != null" >
+        img_size,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryid1 != null" >
+        #{categoryid1,jdbcType=BIGINT},
+      </if>
+      <if test="categoryid2 != null" >
+        #{categoryid2,jdbcType=BIGINT},
+      </if>
+      <if test="categoryid3 != null" >
+        #{categoryid3,jdbcType=BIGINT},
+      </if>
+      <if test="categoryname3 != null" >
+        #{categoryname3,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSize != null" >
+        #{imgSize,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itheima.shop.pojo.AdContentExample" resultType="java.lang.Integer" >
+    select count(*) from ad_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ad_content
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryid1 != null" >
+        categoryId1 = #{record.categoryid1,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryid2 != null" >
+        categoryId2 = #{record.categoryid2,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryid3 != null" >
+        categoryId3 = #{record.categoryid3,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryname3 != null" >
+        categoryName3 = #{record.categoryname3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.img != null" >
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgSize != null" >
+        img_size = #{record.imgSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ad_content
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      categoryId1 = #{record.categoryid1,jdbcType=BIGINT},
+      categoryId2 = #{record.categoryid2,jdbcType=BIGINT},
+      categoryId3 = #{record.categoryid3,jdbcType=BIGINT},
+      categoryName3 = #{record.categoryname3,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      img = #{record.img,jdbcType=VARCHAR},
+      img_size = #{record.imgSize,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itheima.shop.pojo.AdContent" >
+    update ad_content
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryid1 != null" >
+        categoryId1 = #{categoryid1,jdbcType=BIGINT},
+      </if>
+      <if test="categoryid2 != null" >
+        categoryId2 = #{categoryid2,jdbcType=BIGINT},
+      </if>
+      <if test="categoryid3 != null" >
+        categoryId3 = #{categoryid3,jdbcType=BIGINT},
+      </if>
+      <if test="categoryname3 != null" >
+        categoryName3 = #{categoryname3,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSize != null" >
+        img_size = #{imgSize,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itheima.shop.pojo.AdContent" >
+    update ad_content
+    set name = #{name,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      categoryId1 = #{categoryid1,jdbcType=BIGINT},
+      categoryId2 = #{categoryid2,jdbcType=BIGINT},
+      categoryId3 = #{categoryid3,jdbcType=BIGINT},
+      categoryName3 = #{categoryname3,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      img = #{img,jdbcType=VARCHAR},
+      img_size = #{imgSize,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByAdContent" parameterType="com.itheima.shop.pojo.AdContent" resultMap="BaseResultMap">
+  select * from ad_content where (categoryId1=#{categoryid1} or categoryId2=#{categoryid2} or categoryId3=#{categoryid3});
+  </select>
+  
+</mapper>

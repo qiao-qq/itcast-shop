@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.shop.mapper.SkuMapper" >
+  <resultMap id="BaseResultMap" type="com.itheima.shop.pojo.Sku" >
+    <id column="sku_id" property="skuId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sell_point" property="sellPoint" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="stock_count" property="stockCount" jdbcType="INTEGER" />
+    <result column="barcode" property="barcode" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="categoryId" property="categoryid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="cost_pirce" property="costPirce" jdbcType="DECIMAL" />
+    <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+    <result column="is_default" property="isDefault" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sku_id, title, sell_point, price, stock_count, barcode, image, categoryId, status, 
+    create_time, update_time, cost_pirce, market_price, is_default, product_id, category, 
+    brand, spec
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itheima.shop.pojo.SkuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sku
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sku
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sku
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itheima.shop.pojo.SkuExample" >
+    delete from sku
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itheima.shop.pojo.Sku" >
+    insert into sku (sku_id, title, sell_point, 
+      price, stock_count, barcode, 
+      image, categoryId, status, 
+      create_time, update_time, cost_pirce, 
+      market_price, is_default, product_id, 
+      category, brand, spec
+      )
+    values (#{skuId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{sellPoint,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{stockCount,jdbcType=INTEGER}, #{barcode,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{categoryid,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{costPirce,jdbcType=DECIMAL}, 
+      #{marketPrice,jdbcType=DECIMAL}, #{isDefault,jdbcType=VARCHAR}, #{productId,jdbcType=BIGINT}, 
+      #{category,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itheima.shop.pojo.Sku" >
+    insert into sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="sellPoint != null" >
+        sell_point,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="stockCount != null" >
+        stock_count,
+      </if>
+      <if test="barcode != null" >
+        barcode,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="categoryid != null" >
+        categoryId,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="costPirce != null" >
+        cost_pirce,
+      </if>
+      <if test="marketPrice != null" >
+        market_price,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="skuId != null" >
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPoint != null" >
+        #{sellPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stockCount != null" >
+        #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="barcode != null" >
+        #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="costPirce != null" >
+        #{costPirce,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itheima.shop.pojo.SkuExample" resultType="java.lang.Integer" >
+    select count(*) from sku
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sku
+    <set >
+      <if test="record.skuId != null" >
+        sku_id = #{record.skuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sellPoint != null" >
+        sell_point = #{record.sellPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stockCount != null" >
+        stock_count = #{record.stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.barcode != null" >
+        barcode = #{record.barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryid != null" >
+        categoryId = #{record.categoryid,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.costPirce != null" >
+        cost_pirce = #{record.costPirce,jdbcType=DECIMAL},
+      </if>
+      <if test="record.marketPrice != null" >
+        market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isDefault != null" >
+        is_default = #{record.isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=BIGINT},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spec != null" >
+        spec = #{record.spec,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sku
+    set sku_id = #{record.skuId,jdbcType=BIGINT},
+      title = #{record.title,jdbcType=VARCHAR},
+      sell_point = #{record.sellPoint,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      stock_count = #{record.stockCount,jdbcType=INTEGER},
+      barcode = #{record.barcode,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      categoryId = #{record.categoryid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      cost_pirce = #{record.costPirce,jdbcType=DECIMAL},
+      market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      is_default = #{record.isDefault,jdbcType=VARCHAR},
+      product_id = #{record.productId,jdbcType=BIGINT},
+      category = #{record.category,jdbcType=VARCHAR},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      spec = #{record.spec,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itheima.shop.pojo.Sku" >
+    update sku
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPoint != null" >
+        sell_point = #{sellPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stockCount != null" >
+        stock_count = #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="barcode != null" >
+        barcode = #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryid != null" >
+        categoryId = #{categoryid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="costPirce != null" >
+        cost_pirce = #{costPirce,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null" >
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itheima.shop.pojo.Sku" >
+    update sku
+    set title = #{title,jdbcType=VARCHAR},
+      sell_point = #{sellPoint,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      stock_count = #{stockCount,jdbcType=INTEGER},
+      barcode = #{barcode,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      categoryId = #{categoryid,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      cost_pirce = #{costPirce,jdbcType=DECIMAL},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      is_default = #{isDefault,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=BIGINT},
+      category = #{category,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR}
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </update>
+</mapper>
